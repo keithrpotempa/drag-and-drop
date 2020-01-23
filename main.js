@@ -12,11 +12,20 @@ const DragDropManager = Object.create(null, {
   
   
         const targets = document.querySelectorAll(".target")
+        const origin = document.querySelector(".origin")
+
+        origin.ondragover = e => e.preventDefault();
+        origin.ondrop = e => {
+            e.preventDefault();
+            const data = e.dataTransfer.getData("text")
+            e.target.appendChild(document.querySelector(`.${data.split(" ")[1]}`))
+        }
   
         targets.forEach(target => {
           // Dragover not supported by default. Turn that off.
-          target.ondragover = e => e.preventDefault()
+          target.ondragover = e => e.preventDefault();
           target.ondrop = e => {
+            console.log(e.target.className)
             if (e.target.hasChildNodes() === false) {
                 // Enabled dropping on targets
                 e.preventDefault()
@@ -37,8 +46,8 @@ const DragDropManager = Object.create(null, {
   
 // [x] Prevent card nesting 
 
-// [x] The user should only be able to drag one card into either box. 
+// [ ] The user should only be able to drag one card into either box. 
     // Use the childNodes property to ensure that, if a card is already in the box, another can't be added.
 
-    // [ ] The user should be able to 
+    // [x] The user should be able to 
 //      move a card from the top/bottom box back to the middle.
