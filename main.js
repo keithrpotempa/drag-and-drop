@@ -18,14 +18,17 @@ const DragDropManager = Object.create(null, {
         origin.ondrop = e => {
             e.preventDefault();
             const data = e.dataTransfer.getData("text")
-            e.target.appendChild(document.querySelector(`.${data.split(" ")[1]}`))
+            // Added parentNode to the copied code
+            // to ensure that it dropped into the grid article
+            // rather than nesting in the cards there
+            e.target.parentNode.appendChild(document.querySelector(`.${data.split(" ")[1]}`))
+            
         }
   
         targets.forEach(target => {
           // Dragover not supported by default. Turn that off.
           target.ondragover = e => e.preventDefault();
           target.ondrop = e => {
-            console.log(e.target.className)
             if (e.target.hasChildNodes() === false) {
                 // Enabled dropping on targets
                 e.preventDefault()
